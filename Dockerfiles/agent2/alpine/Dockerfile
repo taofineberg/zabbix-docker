@@ -35,8 +35,6 @@ COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/agent2/sbin/", "/usr/sbi
 COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/general/bin/*", "/usr/bin/"]
 COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/agent2/conf/", "${ZABBIX_CONF_DIR}/"]
 
-
-
 RUN set -eux && \
     INSTALL_PKGS="bash \
             tzdata \
@@ -98,18 +96,9 @@ ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 USER root
 WORKDIR /usr/local/bin
-# install grpcurl
 WORKDIR /usr/local/bin
+RUN echo 'UserParameter=spacex.status,grpcurl -plaintext -d '\''{"get_status": {}}'\'' 192.168.100.1:9200 SpaceX.API.Device.Device/Handle' >> /etc/zabbix/zabbix_agent2.conf
 RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing grpcurl
 
-## Starlink
-#RUN mkdir -p /usr/src/app
-#WORKDIR /usr/src/app
-# install requirements, copy over the app
-#COPY requirements.txt /usr/src/app/requirements.txt
-#RUN apk add --no-cache python3 py3-pip
-#RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
-#COPY . /usr/src/app/
 
-#CMD python3 -m app.app
 CMD ["/usr/sbin/zabbix_agent2", "--foreground", "-c", "/etc/zabbix/zabbix_agent2.conf"]
