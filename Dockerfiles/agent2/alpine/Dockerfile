@@ -107,8 +107,8 @@ COPY ["docker-entrypoint.sh", "/usr/bin/"]
 
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
-USER 1997
-
+USER root
+WORKDIR /usr/local/bin
 # install grpcurl
 WORKDIR /usr/local/bin
 RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing grpcurl
@@ -120,7 +120,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r /usr/src/app/requirements.txt
 COPY . /usr/src/app/
-CMD python3 -m app.app
+#CMD python3 -m app.app
 
 
 
