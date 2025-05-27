@@ -26,16 +26,6 @@ ENV ZBX_PERSISTENTBUFFERFILE="$ZABBIX_USER_HOME_DIR/buffer/agent2.db" \
 RUN echo 'grpcurl -plaintext -d '\''{"get_status": {}}'\'' 192.168.100.1:9200 SpaceX.API.Device.Device/Handle' > /usr/local/bin/starlink_get_data.sh && \
     chmod +x /usr/local/bin/starlink_get_data.sh
 
-## Starlink
-#ENV PYTHONPATH=.
-#ENV STARLINK_URI=192.168.100.1:9200
-#ENV STARLINK_REFRESH_SECS=1
-#ENV STARLINK_HISTORY_REFRESH_SECS=30
-#ENV BROADCAST_RATE_SECS=3
-#ENV SPEEDTEST_REFRESH_MINS=30
-#ENV BUFFER_SIZE_HOURS=72
-
-
 LABEL org.opencontainers.image.authors="Alexey Pustovalov <alexey.pustovalov@zabbix.com>" \
       org.opencontainers.image.description="Zabbix agent 2 is deployed on a monitoring target to actively monitor local resources and applications" \
       org.opencontainers.image.documentation="https://www.zabbix.com/documentation/${MAJOR_VERSION}/manual/installation/containers" \
