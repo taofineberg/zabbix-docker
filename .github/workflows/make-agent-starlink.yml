@@ -1,10 +1,10 @@
-name: Build and Push Starlink Agent
+name: Build and Push Starlink Agent (Alpine arm64)
 
 on:
   push:
     paths:
       - 'Dockerfiles/agent2/alpine/**'
-      - '.github/workflows/build-and-push-starlink-agent.yml'
+      - '.github/workflows/make-agent-starlink.yml'
   workflow_dispatch:
 
 jobs:
@@ -23,14 +23,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Check DOCKER_REPOSITORY variable
-        run: |
-          if [ -z "${{ vars.DOCKER_REPOSITORY }}" ]; then
-            echo "DOCKER_REPOSITORY variable is not set!"
-            exit 1
-          fi
-
-      - name: Build and push Docker image
+      - name: Build and push Docker image (arm64)
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Dockerfiles/agent2/alpine
+          file: ./Dockerfiles/agent2/alpine/Dockerfile
+          platforms: linux/arm64
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/starlink-agent:alpine-arm64
         uses: docker/build-push-action@v5
         with:
           context: ./Dockerfiles/agent2/alpine
