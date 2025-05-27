@@ -2,7 +2,7 @@
 ARG OS_BASE_IMAGE=alpine:3.21
 ARG MAJOR_VERSION=7.2
 ARG ZBX_VERSION=${MAJOR_VERSION}.7
-ARG BUILD_BASE_IMAGE=zabbix-build-mysql:alpine-${ZBX_VERSION}
+ARG BUILD_BASE_IMAGE=zabbix/zabbix-build-mysql:alpine-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
 
