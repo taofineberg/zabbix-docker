@@ -36,4 +36,4 @@ jobs:
           context: ./Dockerfiles/agent2/alpine
           file: ./Dockerfiles/agent2/alpine/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_REPOSITORY }}:latest
+          tags: taofineberg/zabbix-docker-agent2-alpine:latest
