@@ -7,9 +7,6 @@ ARG BUILD_BASE_IMAGE=zabbix/zabbix-build-mysql:alpine-${ZBX_VERSION}
 FROM ${BUILD_BASE_IMAGE} AS builder
 FROM ${OS_BASE_IMAGE}
 
-## Starlink
-#FROM python:3.9.1-slim-buster
-
 ARG MAJOR_VERSION
 ARG ZBX_VERSION
 ARG ZBX_SOURCES=https://git.zabbix.com/scm/zbx/zabbix.git
@@ -38,8 +35,7 @@ COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/agent2/sbin/", "/usr/sbi
 COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/general/bin/*", "/usr/bin/"]
 COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/agent2/conf/", "${ZABBIX_CONF_DIR}/"]
 
-# Overwrite with custom config if present
-COPY config_templates/agent2/zabbix_agent2.conf ${ZABBIX_CONF_DIR}/zabbix_agent2.conf
+
 
 RUN set -eux && \
     INSTALL_PKGS="bash \
