@@ -22,6 +22,10 @@ ENV TERM=xterm \
 ENV ZBX_PERSISTENTBUFFERFILE="$ZABBIX_USER_HOME_DIR/buffer/agent2.db" \
     ZBX_USERPARAMETERDIR=${ZABBIX_USER_HOME_DIR}/user_scripts
 
+# Add starlink_get_data.sh script
+RUN echo 'grpcurl -plaintext -d '\''{"get_status": {}}'\'' 192.168.100.1:9200 SpaceX.API.Device.Device/Handle' > /usr/local/bin/starlink_get_data.sh && \
+    chmod +x /usr/local/bin/starlink_get_data.sh
+
 ## Starlink
 #ENV PYTHONPATH=.
 #ENV STARLINK_URI=192.168.100.1:9200
@@ -123,10 +127,4 @@ RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl
 #COPY . /usr/src/app/
 
 #CMD python3 -m app.app
-
-
-
-
-
-
 CMD ["/usr/sbin/zabbix_agent2", "--foreground", "-c", "/etc/zabbix/zabbix_agent2.conf"]
