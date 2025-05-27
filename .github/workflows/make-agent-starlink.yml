@@ -23,10 +23,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Check DOCKER_REPOSITORY secret
+      - name: Check DOCKER_REPOSITORY variable
         run: |
-          if [ -z "${{ secrets.DOCKER_REPOSITORY }}" ]; then
-            echo "DOCKER_REPOSITORY secret is not set!"
+          if [ -z "${{ vars.DOCKER_REPOSITORY }}" ]; then
+            echo "DOCKER_REPOSITORY variable is not set!"
             exit 1
           fi
 
@@ -36,4 +36,4 @@ jobs:
           context: ./Dockerfiles/agent2/alpine
           file: ./Dockerfiles/agent2/alpine/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_REPOSITORY }}:latest
