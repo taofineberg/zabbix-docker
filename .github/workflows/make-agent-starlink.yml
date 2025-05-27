@@ -37,3 +37,5 @@ jobs:
           file: ./Dockerfiles/agent2/alpine/Dockerfile
           push: true
           tags: taofineberg/zabbix-docker-agent2-alpine:latest
+
+FROM zabbix/zabbix-build-mysql:alpine-7.2.7
