@@ -23,6 +23,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Check DOCKER_REPOSITORY secret
+        run: |
+          if [ -z "${{ secrets.DOCKER_REPOSITORY }}" ]; then
+            echo "DOCKER_REPOSITORY secret is not set!"
+            exit 1
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
