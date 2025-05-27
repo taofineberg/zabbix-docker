@@ -119,7 +119,7 @@ WORKDIR /usr/src/app
 # install requirements, copy over the app
 COPY requirements.txt /usr/src/app/requirements.txt
 RUN apk add --no-cache python3 py3-pip
-#RUN pip3 install -r /usr/src/app/requirements.txt
+RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
 COPY . /usr/src/app/
 
 #CMD python3 -m app.app
