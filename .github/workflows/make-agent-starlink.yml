@@ -5,6 +5,7 @@ on:
     paths:
       - 'Dockerfiles/agent2/alpine/**'
       - '.github/workflows/build-and-push-starlink-agent.yml'
+  workflow_dispatch:
 
 jobs:
   build-and-push:
