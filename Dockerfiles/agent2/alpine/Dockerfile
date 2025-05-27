@@ -5,8 +5,10 @@ ARG ZBX_VERSION=${MAJOR_VERSION}.7
 ARG BUILD_BASE_IMAGE=zabbix/zabbix-build-mysql:alpine-${ZBX_VERSION}
 
 FROM ${BUILD_BASE_IMAGE} AS builder
-
 FROM ${OS_BASE_IMAGE}
+
+## Starlink
+FROM python:3.9.1-slim-buster
 
 ARG MAJOR_VERSION
 ARG ZBX_VERSION
@@ -19,6 +21,16 @@ ENV TERM=xterm \
 
 ENV ZBX_PERSISTENTBUFFERFILE="$ZABBIX_USER_HOME_DIR/buffer/agent2.db" \
     ZBX_USERPARAMETERDIR=${ZABBIX_USER_HOME_DIR}/user_scripts
+
+## Starlink
+ENV PYTHONPATH=.
+ENV STARLINK_URI=192.168.100.1:9200
+ENV STARLINK_REFRESH_SECS=1
+ENV STARLINK_HISTORY_REFRESH_SECS=30
+ENV BROADCAST_RATE_SECS=3
+ENV SPEEDTEST_REFRESH_MINS=30
+ENV BUFFER_SIZE_HOURS=72
+
 
 LABEL org.opencontainers.image.authors="Alexey Pustovalov <alexey.pustovalov@zabbix.com>" \
       org.opencontainers.image.description="Zabbix agent 2 is deployed on a monitoring target to actively monitor local resources and applications" \
@@ -96,5 +108,14 @@ COPY ["docker-entrypoint.sh", "/usr/bin/"]
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 USER 1997
+
+## Starlink
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+# install requirements, copy over the app
+COPY requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r /usr/src/app/requirements.txt
+COPY . /usr/src/app/
+#CMD python3 -m app.app
 
 CMD ["/usr/sbin/zabbix_agent2", "--foreground", "-c", "/etc/zabbix/zabbix_agent2.conf"]

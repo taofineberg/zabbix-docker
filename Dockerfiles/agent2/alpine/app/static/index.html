@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Starlink Monitor</title>
+  <link rel="icon" type="image/x-icon" id="favicon" href="favicon.ico" />
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <div id="speedtestmodal" class="modal">
+    Speedtest initiated...
+  </div>
+
+  <div class="grid-container">
+    <div>
+      <div id="g1"></div>
+    </div>
+    <div>
+      <div id="g2"></div>
+    </div>
+    <div>
+      <div id="g3"></div>
+    </div>
+    <div>
+      <div id="g4"></div>
+    </div>
+  </div>
+
+  <button id="runspeedtest" style="margin-left:40%" onclick="triggerSpeedtest()">Run speedtest now</button>
+  <br>
+
+  <div>
+    <div class="obst" id="obstructions"></div>
+  </div>
+
+  <div>
+    <div id="historyselect">
+      <label for="history">History:</label>
+      <select id="history" onchange="startBroadcast()">
+        <option value="900">15 mins</option>
+        <option value="3600">1 hour</option>
+        <option value="10800">3 hours</option>
+        <option value="21600">6 hours</option>
+        <option value="43200">12 hours</option>
+        <option value="86400">24 hours</option>
+        <option value="20000000">All</option>
+      </select>
+    </div>
+    <div style="margin-top:5px">
+      <div id="lastupdate">Waiting...</div>
+      <div id="uptime"></div>
+      <div id="firmware"></div>
+    </div>
+  </div>
+
+  <div>
+    <a href="https://www.starlink.com/" target="_blank" title="Better than nothing beta">
+      <img src="starlink.svg" style="height:50px" alt="Better than nothing beta">
+    </a>
+
+    <a href="http://192.168.100.1/statistics" target="_blank" title="Starlink stats page">
+      <img src="stats.svg" style="height:50px" alt="Starlink stats page">
+    </a>
+
+    <a href="https://github.com/dbjohnson/starlink-monitor" target="_blank" title="Fork me on github">
+      <img src="github.svg" style="height:50px" alt="Fork me on github">
+    </a>
+  </div>
+</body>
+
+</html>
