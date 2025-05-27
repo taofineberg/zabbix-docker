@@ -30,7 +30,7 @@ jobs:
           file: ./Dockerfiles/agent2/alpine/Dockerfile
           platforms: linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/starlink-agent:alpine-arm64
+          tags: taofineberg/zabbix-docker-agent2-alpine:latest
         uses: docker/build-push-action@v5
         with:
           context: ./Dockerfiles/agent2/alpine
