@@ -109,13 +109,22 @@ ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 USER 1997
 
+# install grpcurl
+WORKDIR /usr/local/bin
+RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing grpcurl
+
 ## Starlink
-#RUN mkdir -p /usr/src/app
-#WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 # install requirements, copy over the app
-#COPY requirements.txt /usr/src/app/requirements.txt
-#RUN pip install -r /usr/src/app/requirements.txt
-#COPY . /usr/src/app/
-#CMD python3 -m app.app
+COPY requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r /usr/src/app/requirements.txt
+COPY . /usr/src/app/
+CMD python3 -m app.app
+
+
+
+
+
 
 CMD ["/usr/sbin/zabbix_agent2", "--foreground", "-c", "/etc/zabbix/zabbix_agent2.conf"]
