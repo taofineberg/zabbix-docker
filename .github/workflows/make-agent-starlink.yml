@@ -31,9 +31,3 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: taofineberg/zabbix-docker-agent2-alpine:latest
-        uses: docker/build-push-action@v5
-        with:
-          context: ./Dockerfiles/agent2/alpine
-          file: ./Dockerfiles/agent2/alpine/Dockerfile
-          push: true
-          tags: taofineberg/zabbix-docker-agent2-alpine:latest
