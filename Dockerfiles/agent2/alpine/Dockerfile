@@ -23,13 +23,13 @@ ENV ZBX_PERSISTENTBUFFERFILE="$ZABBIX_USER_HOME_DIR/buffer/agent2.db" \
     ZBX_USERPARAMETERDIR=${ZABBIX_USER_HOME_DIR}/user_scripts
 
 ## Starlink
-ENV PYTHONPATH=.
-ENV STARLINK_URI=192.168.100.1:9200
-ENV STARLINK_REFRESH_SECS=1
-ENV STARLINK_HISTORY_REFRESH_SECS=30
-ENV BROADCAST_RATE_SECS=3
-ENV SPEEDTEST_REFRESH_MINS=30
-ENV BUFFER_SIZE_HOURS=72
+#ENV PYTHONPATH=.
+#ENV STARLINK_URI=192.168.100.1:9200
+#ENV STARLINK_REFRESH_SECS=1
+#ENV STARLINK_HISTORY_REFRESH_SECS=30
+#ENV BROADCAST_RATE_SECS=3
+#ENV SPEEDTEST_REFRESH_MINS=30
+#ENV BUFFER_SIZE_HOURS=72
 
 
 LABEL org.opencontainers.image.authors="Alexey Pustovalov <alexey.pustovalov@zabbix.com>" \
@@ -114,13 +114,13 @@ WORKDIR /usr/local/bin
 RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing grpcurl
 
 ## Starlink
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+#RUN mkdir -p /usr/src/app
+#WORKDIR /usr/src/app
 # install requirements, copy over the app
-COPY requirements.txt /usr/src/app/requirements.txt
-RUN apk add --no-cache python3 py3-pip
-RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
-COPY . /usr/src/app/
+#COPY requirements.txt /usr/src/app/requirements.txt
+#RUN apk add --no-cache python3 py3-pip
+#RUN pip3 install --break-system-packages -r /usr/src/app/requirements.txt
+#COPY . /usr/src/app/
 
 #CMD python3 -m app.app
 
