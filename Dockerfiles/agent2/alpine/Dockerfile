@@ -100,5 +100,13 @@ WORKDIR /usr/local/bin
 RUN echo 'UserParameter=spacex.status,grpcurl -plaintext -d '\''{"get_status": {}}'\'' 192.168.100.1:9200 SpaceX.API.Device.Device/Handle' >> /etc/zabbix/zabbix_agent2.conf
 RUN cd /usr/local/bin && apk update && apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing grpcurl
 
+### add this to the /etc/zabbix/zabbix_agent2.conf file
+RUN echo '###### Modbus PRF ####### _TF' >> /etc/zabbix/zabbix_agent2.conf && \
+    echo 'Plugins.Modbus.Sessions.MB1.Endpoint=tcp://192.168.75.18:502' >> /etc/zabbix/zabbix_agent2.conf && \
+    echo 'Plugins.Modbus.Sessions.MB1.SlaveID=255' >> /etc/zabbix/zabbix_agent2.conf && \
+    echo 'Plugins.Modbus.Sessions.MB1.Timeout=2' >> /etc/zabbix/zabbix_agent2.conf
+
+
+
 
 CMD ["/usr/sbin/zabbix_agent2", "--foreground", "-c", "/etc/zabbix/zabbix_agent2.conf"]
